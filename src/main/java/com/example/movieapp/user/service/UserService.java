@@ -30,7 +30,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public List<GetUserResponse> getAllUsers() {
+    public List<GetUserResponse> getAll() {
         List<User> user = userRepository.findAll();
         return user.stream().map( u -> new GetUserResponse(
                 u.getId(),
@@ -40,7 +40,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public GetUserResponse getOneUser(Long userId) {
+    public GetUserResponse getOne(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new UserNotFoundException("없는 유저입니다.")
         );
@@ -50,5 +50,15 @@ public class UserService {
                 user.getUsername(),
                 user.getEmail()
         );
+    }
+
+    @Transactional
+    public void delete(Long userId) {
+        boolean exist = userRepository.existsById(userId);
+        if(!exist){
+            throw new UserNotFoundException("없는 유저입니다.");
+        }
+
+        userRepository.deleteById(userId);
     }
 }

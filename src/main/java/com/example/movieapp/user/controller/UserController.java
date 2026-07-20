@@ -23,7 +23,7 @@ public class UserController {
     //READ All
     @GetMapping("/users")
     public ResponseEntity<List<GetUserResponse>> getAllUsers() {
-        return ResponseEntity.of(userService.getAll());
+        return ResponseEntity.ok(userService.getAll());
     }
 
     //READ One
