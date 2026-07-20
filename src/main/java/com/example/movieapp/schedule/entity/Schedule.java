@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
-@Table(name = "schedule")
+@Table(name = "schedules")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Schedule extends BaseEntity {
 
@@ -16,7 +16,6 @@ public class Schedule extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
     private String title;
     private String content;
 
@@ -24,8 +23,7 @@ public class Schedule extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Schedule(String username, String title, String content, User user) {
-        this.username = username;
+    public Schedule(String title, String content, User user) {
         this.title = title;
         this.content = content;
         this.user = user;

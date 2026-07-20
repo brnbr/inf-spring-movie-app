@@ -20,45 +20,30 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final UserRepository userRepository;
 
-    //CREATE
     @Transactional
     public CreateScheduleResponse create(Long userId, CreateScheduleRequest request) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new UserNotFoundException("없는 유저입니다.")
         );
 
-        Schedule schedule = new Schedule(request.getUsername(), request.getTitle(), request.getContent(), user);
+        Schedule schedule = new Schedule(request.getTitle(), request.getContent(), user);
         Schedule saved = scheduleRepository.save(schedule);
 
-        return new CreateScheduleResponse(
-                saved.getId(),
-                saved.getUsername(),
-                saved.getTitle(),
-                saved.getContent(),
-                saved.getCreatedAt()
-        );
+        return new CreateScheduleResponse(schedule);
     }
 
-    //READ All
     @Transactional(readOnly = true)
     public List<GetScheduleResponse> getAll(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new UserNotFoundException("없는 유저입니다.")
         );
 
-        List<Schedule> schedules = scheduleRepository.findAll(user.getId());
+        List<Schedule> schedules = scheduleRepository.findAll(userId);
         if (schedules.isEmpty()) {
             throw new ScheduleNotFoundException("일정이 없습니다.");
         }
 
-        return schedules.stream().map( schedule -> new GetScheduleResponse(
-                schedule.getId(),
-                schedule.getUsername(),
-                schedule.getTitle(),
-                schedule.getContent(),
-                schedule.getCreatedAt(),
-                schedule.getModifiedAt()
-        )).toList();
+        return schedules.stream().map( schedule -> new GetScheduleResponse(schedule)).toList();
     }
 
     @Transactional(readOnly = true)
@@ -71,8 +56,10 @@ public class ScheduleService {
                 () -> new ScheduleNotFoundException("일정이 없습니다.")
         );
 
-        return new GetScheduleResponse(schedule.getId(), schedule.getUsername(), schedule.getTitle(),
-                schedule.getContent(), schedule.getCreatedAt(), schedule.getModifiedAt());
+        if (!schedule.getUser().getId().equals(userId)) {
+            throw new ScheduleNotFoundException("일정이 없습니다.");
+        }
+        return new GetScheduleResponse(schedule);
     }
 
     @Transactional
@@ -82,7 +69,7 @@ public class ScheduleService {
         );
 
         schedule.update(request.getTitle(), request.getContetn());
-        return new UpdateScheduleResponse(schedule.getTitle(), schedule.getContent(), schedule.getModifiedAt());
+        return new UpdateScheduleResponse(schedule);
     }
 
     @Transactional
