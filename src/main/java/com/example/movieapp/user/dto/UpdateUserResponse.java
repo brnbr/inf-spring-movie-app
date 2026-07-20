@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class UpdateUserResponse {
 
     private final Long id;
-    private final String name;
+    private final String username;
     private final String email;
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
