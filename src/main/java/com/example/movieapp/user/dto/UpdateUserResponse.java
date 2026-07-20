@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UpdateUserResponse {
 
+    private final Long id;
     private final String name;
     private final String email;
 }
