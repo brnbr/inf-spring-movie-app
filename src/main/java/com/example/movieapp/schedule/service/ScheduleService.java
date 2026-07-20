@@ -1,5 +1,6 @@
 package com.example.movieapp.schedule.service;
 
+import com.example.movieapp.exception.ScheduleNotFoundException;
 import com.example.movieapp.exception.UserNotFoundException;
 import com.example.movieapp.schedule.dto.*;
 import com.example.movieapp.schedule.entity.Schedule;
