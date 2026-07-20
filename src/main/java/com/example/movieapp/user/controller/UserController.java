@@ -35,13 +35,13 @@ public class UserController {
     //Update
     @PutMapping("/users/{userId}")
     public ResponseEntity<UpdateUserResponse> update(@PathVariable Long userId, @RequestBody UpdateUserReqeust reqeust) {
-        return ResponseEntity.ok(userService.update(userId, reqeust));
+        return ResponseEntity.ok(userService.update(userId, reqeust, reqeust.getPassword()));
     }
 
     //Delete
     @DeleteMapping("/users/{userId}")
-    public ResponseEntity<Void> delete(@PathVariable Long userId) {
-        userService.delete(userId);
+    public ResponseEntity<Void> delete(@PathVariable Long userId, @RequestBody Integer password) {
+        userService.delete(userId, password);
         return ResponseEntity.noContent().build();
     }
 }

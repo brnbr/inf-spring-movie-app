@@ -1,5 +1,6 @@
 package com.example.movieapp.user.service;
 
+import com.example.movieapp.exception.InvalidPasswordException;
 import com.example.movieapp.exception.UserNotFoundException;
 import com.example.movieapp.user.dto.*;
 import com.example.movieapp.user.entity.User;
@@ -18,7 +19,7 @@ public class UserService {
 
     @Transactional
     public CreateUserResponse create(CreateUserRequest request) {
-        User user = new User(request.getUsername(), request.getEmail());
+        User user = new User(request.getUsername(), request.getEmail(), request.getPassword());
         User saved = userRepository.save(user);
 
         return new CreateUserResponse(
@@ -57,20 +58,27 @@ public class UserService {
     }
 
     @Transactional
-    public UpdateUserResponse update(Long userId, UpdateUserReqeust reqeust) {
+    public UpdateUserResponse update(Long userId, UpdateUserReqeust reqeust, Integer password) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new UserNotFoundException("없는 유저입니다.")
         );
+
+        if (!user.getPassword().equals(password)) {
+            throw new InvalidPasswordException("비밀번호가 틀렸습니다.");
+        }
 
         user.update(reqeust.getUsername(), reqeust.getEmail());
         return new UpdateUserResponse(user.getId(), user.getUsername(), user.getEmail(), user.getCreatedAt(), user.getModifiedAt());
     }
 
     @Transactional
-    public void delete(Long userId) {
-        boolean exist = userRepository.existsById(userId);
-        if(!exist){
-            throw new UserNotFoundException("없는 유저입니다.");
+    public void delete(Long userId, Integer password) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new UserNotFoundException("없는 유저입니다.")
+        );
+
+        if (!user.getPassword().equals(password)) {
+            throw new InvalidPasswordException("비밀번호가 틀렸습니다.");
         }
 
         userRepository.deleteById(userId);
