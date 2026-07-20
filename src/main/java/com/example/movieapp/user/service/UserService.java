@@ -1,5 +1,6 @@
 package com.example.movieapp.user.service;
 
+import com.example.movieapp.exception.UserNotFoundException;
 import com.example.movieapp.user.dto.*;
 import com.example.movieapp.user.entity.User;
 import com.example.movieapp.user.repository.UserRepository;
