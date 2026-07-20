@@ -19,14 +19,21 @@ public class UserController {
 
     private final UserService userService;
 
+    //CREATE
     @PostMapping("/users")
     public ResponseEntity<CreateUserResponse> create(@PathVariable CreateUserRequest request) {
         return ResponseEntity.ok(userService.create(request));
     }
 
+    //READ All
     @GetMapping("/users")
     public ResponseEntity<List<GetUserResponse>> getAllUsers() {
         return ResponseEntity.of(userService.getAll());
     }
 
+    //READ One
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<GetUserResponse> getOneUser(@PathVariable Long userId) {
+        return ResponseEntity.ok(userService.getOne(userId));
+    }
 }
