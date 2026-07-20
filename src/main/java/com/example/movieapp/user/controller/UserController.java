@@ -1,9 +1,6 @@
 package com.example.movieapp.user.controller;
 
-import com.example.movieapp.user.dto.CreateUserRequest;
-import com.example.movieapp.user.dto.CreateUserResponse;
-import com.example.movieapp.user.dto.GetUserResponse;
-import com.example.movieapp.user.dto.UpdateUserResponse;
+import com.example.movieapp.user.dto.*;
 import com.example.movieapp.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -39,5 +36,12 @@ public class UserController {
     @PutMapping("/users/{userId}")
     public ResponseEntity<UpdateUserResponse> update(@PathVariable Long userId, @RequestBody UpdateUserReqeust reqeust) {
         return ResponseEntity.ok(userService.update(userId, reqeust));
+    }
+
+    //Delete
+    @DeleteMapping("/users/{userId}")
+    public ResponseEntity<Void> delete(@PathVariable Long userId) {
+        userService.delete(userId);
+        return ResponseEntity.noContent().build();
     }
 }
