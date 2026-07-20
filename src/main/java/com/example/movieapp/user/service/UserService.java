@@ -17,7 +17,6 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    //CREATE
     @Transactional
     public CreateUserResponse create(CreateUserRequest request) {
         User user = new User(request.getUsername(), request.getEmail());
@@ -30,7 +29,6 @@ public class UserService {
         );
     }
 
-    //READ All
     @Transactional(readOnly = true)
     public List<GetUserResponse> getAllUsers() {
         List<User> user = userRepository.findAll();
@@ -39,5 +37,18 @@ public class UserService {
                 u.getUsername(),
                 u.getEmail()
         )).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public GetUserResponse getOneUser(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new UserNotFoundException("없는 유저입니다.")
+        );
+
+        return new GetUserResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail()
+        );
     }
 }
