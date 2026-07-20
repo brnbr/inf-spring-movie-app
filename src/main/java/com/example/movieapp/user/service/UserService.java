@@ -63,7 +63,7 @@ public class UserService {
         );
 
         user.update(reqeust.getUsername(), reqeust.getEmail());
-        return new UpdateUserResponse(user.getId(), user.getUsername(), user.getEmail(), user.getModifiedAt());
+        return new UpdateUserResponse(user.getId(), user.getUsername(), user.getEmail(), user.getCreatedAt(), user.getModifiedAt());
     }
 
     @Transactional
