@@ -6,10 +6,7 @@ import com.example.movieapp.user.dto.GetUserResponse;
 import com.example.movieapp.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,5 +32,11 @@ public class UserController {
     @GetMapping("/users/{userId}")
     public ResponseEntity<GetUserResponse> getOneUser(@PathVariable Long userId) {
         return ResponseEntity.ok(userService.getOne(userId));
+    }
+
+    //Update
+    @PutMapping("/users/{userId}")
+    public ResponseEntity<UpdateUserResponse> update(@PathVariable Long userId, @RequestBody UpdateUserReqeust reqeust) {
+        return ResponseEntity.ok(userService.update(userId, reqeust));
     }
 }
