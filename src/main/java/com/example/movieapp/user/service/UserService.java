@@ -34,7 +34,9 @@ public class UserService {
         return user.stream().map( u -> new GetUserResponse(
                 u.getId(),
                 u.getUsername(),
-                u.getEmail()
+                u.getEmail(),
+                u.getCreatedAt(),
+                u.getModifiedAt()
         )).toList();
     }
 
@@ -47,7 +49,9 @@ public class UserService {
         return new GetUserResponse(
                 user.getId(),
                 user.getUsername(),
-                user.getEmail()
+                user.getEmail(),
+                user.getCreatedAt(),
+                user.getModifiedAt()
         );
     }
 
@@ -58,7 +62,7 @@ public class UserService {
         );
 
         user.update(reqeust.getUsername(), reqeust.getEmail());
-        return new UpdateUserResponse(user.getId(), user.getUsername(), user.getEmail());
+        return new UpdateUserResponse(user.getId(), user.getUsername(), user.getEmail(), user.getModifiedAt());
     }
 
     @Transactional
