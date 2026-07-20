@@ -1,8 +1,6 @@
 package com.example.movieapp.user.service;
 
-import com.example.movieapp.user.dto.CreateUserRequest;
-import com.example.movieapp.user.dto.CreateUserResponse;
-import com.example.movieapp.user.dto.GetUserResponse;
+import com.example.movieapp.user.dto.*;
 import com.example.movieapp.user.entity.User;
 import com.example.movieapp.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +48,16 @@ public class UserService {
                 user.getUsername(),
                 user.getEmail()
         );
+    }
+
+    @Transactional
+    public UpdateUserResponse update(Long userId, UpdateUserReqeust reqeust) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new UserNotFoundException("없는 유저입니다.")
+        );
+
+        user.update(reqeust.getUsername(), reqeust.getEmail());
+        return new UpdateUserResponse(user.getId(), user.getUsername(), user.getEmail());
     }
 
     @Transactional
