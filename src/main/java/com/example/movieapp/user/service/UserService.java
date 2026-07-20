@@ -23,7 +23,8 @@ public class UserService {
         return new CreateUserResponse(
                 saved.getId(),
                 saved.getUsername(),
-                saved.getEmail()
+                saved.getEmail(),
+                saved.getCreatedAt()
         );
     }
 

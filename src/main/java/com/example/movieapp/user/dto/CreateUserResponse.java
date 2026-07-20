@@ -13,5 +13,4 @@ public class CreateUserResponse {
     private final String username;
     private final String email;
     private final LocalDateTime createdAt;
-    private final LocalDateTime modifiedAt;
 }
