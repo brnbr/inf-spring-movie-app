@@ -3,6 +3,7 @@ package com.example.movieapp.user.controller;
 import com.example.movieapp.user.dto.CreateUserRequest;
 import com.example.movieapp.user.dto.CreateUserResponse;
 import com.example.movieapp.user.dto.GetUserResponse;
+import com.example.movieapp.user.dto.UpdateUserResponse;
 import com.example.movieapp.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
