@@ -25,4 +25,9 @@ public class ScheduleController {
     public ResponseEntity<List<GetScheduleResponse>> getAll(@PathVariable Long userId) {
         return ResponseEntity.ok(scheduleService.getAll(userId));
     }
+
+    @GetMapping("/users/{userId}/schedules/{scheduleId}")
+    public ResponseEntity<GetScheduleResponse> getOne(@PathVariable Long userId, @PathVariable Long scheduleId) {
+        return ResponseEntity.ok(scheduleService.getOne(userId, scheduleId));
+    }
 }

@@ -61,4 +61,18 @@ public class ScheduleService {
                 schedule.getModifiedAt()
         )).toList();
     }
+
+    @Transactional(readOnly = true)
+    public GetScheduleResponse getOne(Long userId, Long scheduleId) {
+        userRepository.findById(userId).orElseThrow(
+            () -> new UserNotFoundException("없는 유저입니다.")
+        );
+
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
+                () -> new ScheduleNotFoundException("일정이 없습니다.")
+        );
+
+        return new GetScheduleResponse(schedule.getId(), schedule.getUsername(), schedule.getTitle(),
+                schedule.getContent(), schedule.getCreatedAt(), schedule.getModifiedAt());
+    }
 }
