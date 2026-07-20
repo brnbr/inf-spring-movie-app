@@ -1,9 +1,7 @@
 package com.example.movieapp.schedule.service;
 
 import com.example.movieapp.exception.UserNotFoundException;
-import com.example.movieapp.schedule.dto.CreateScheduleRequest;
-import com.example.movieapp.schedule.dto.CreateScheduleResponse;
-import com.example.movieapp.schedule.dto.GetScheduleResponse;
+import com.example.movieapp.schedule.dto.*;
 import com.example.movieapp.schedule.entity.Schedule;
 import com.example.movieapp.schedule.repository.ScheduleRepository;
 import com.example.movieapp.user.entity.User;
@@ -74,5 +72,25 @@ public class ScheduleService {
 
         return new GetScheduleResponse(schedule.getId(), schedule.getUsername(), schedule.getTitle(),
                 schedule.getContent(), schedule.getCreatedAt(), schedule.getModifiedAt());
+    }
+
+    @Transactional
+    public UpdateScheduleResponse update(Long scheduleId, UpdateScheduleReqeust request) {
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
+                () -> new ScheduleNotFoundException("일정이 없습니다.")
+        );
+
+        schedule.update(request.getTitle(), request.getContetn());
+        return new UpdateScheduleResponse(schedule.getTitle(), schedule.getContent(), schedule.getModifiedAt());
+    }
+
+    @Transactional
+    public void delete(Long scheduleId) {
+        boolean exist = scheduleRepository.existsById(scheduleId);
+        if (!exist) {
+            throw new ScheduleNotFoundException("일정이 없습니다.");
+        }
+
+        scheduleRepository.deleteById(scheduleId);
     }
 }
