@@ -8,6 +8,10 @@ import com.example.movieapp.schedule.repository.ScheduleRepository;
 import com.example.movieapp.user.entity.User;
 import com.example.movieapp.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +23,16 @@ public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
     private final UserRepository userRepository;
+
+    @Transactional(readOnly = true)
+    public Page<GetScheduleResponse> findAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size > 0 ? size : 10,
+                Sort.by(Sort.Direction.DESC, "modifiedAt"));
+
+        Page<Schedule> schedules = scheduleRepository.findAll(pageable);
+
+        return schedules.map(schedule -> new GetScheduleResponse(schedule));
+    }
 
     @Transactional
     public CreateScheduleResponse create(Long userId, CreateScheduleRequest request) {
