@@ -29,12 +29,12 @@ public class ScheduleController {
         return ResponseEntity.ok(scheduleService.getOne(userId, scheduleId));
     }
 
-    @PutMapping("/schedules/{scheduleId}")
-    public ResponseEntity<UpdateScheduleResponse> update(@PathVariable Long scheduleId, @RequestBody UpdateScheduleReqeust request) {
+    @PutMapping("/users/{userId}/schedules/{scheduleId}")
+    public ResponseEntity<UpdateScheduleResponse> update(@PathVariable Long scheduleId, @RequestBody UpdateScheduleRequest request) {
         return ResponseEntity.ok(scheduleService.update(scheduleId, request));
     }
 
-    @DeleteMapping("/schedules/{scheduleId}")
+    @DeleteMapping("/users/{userId}/schedules/{scheduleId}")
     public ResponseEntity<Void> delete(@PathVariable Long scheduleId) {
         scheduleService.delete(scheduleId);
         return ResponseEntity.noContent().build();
