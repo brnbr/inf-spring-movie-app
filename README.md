@@ -37,4 +37,4 @@
 
 <br>
 
-<img src="https://github.com/user-attachments/assets/02c13149-e69b-4e88-8854-6bcc113c8154" width="800" alt="API 명세서 및 ERD 요구사항">
+<img width="1841" height="2532" alt="image" src="https://github.com/user-attachments/assets/02c13149-e69b-4e88-8854-6bcc113c8154" />
