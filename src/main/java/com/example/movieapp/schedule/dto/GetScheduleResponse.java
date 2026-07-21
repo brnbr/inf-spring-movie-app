@@ -14,6 +14,7 @@ public class GetScheduleResponse {
     private final String username;
     private final String title;
     private final String content;
+    private final int commentCount;
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
 
@@ -22,6 +23,7 @@ public class GetScheduleResponse {
         this.username = schedule.getUser().getUsername();
         this.title = schedule.getTitle();
         this.content = schedule.getContent();
+        this.commentCount = schedule.getComment().size();
         this.createdAt = schedule.getCreatedAt();
         this.modifiedAt = schedule.getModifiedAt();
     }
