@@ -36,3 +36,5 @@
 | **댓글 검색** | `GET` | `/schedules/{scheduleId}/comments` | None | `200 OK`<br>`[{"id", "content", "createdAt"}, ...]` |
 
 <br>
+
+<img width="1682" height="5065" alt="image" src="https://github.com/user-attachments/assets/02c13149-e69b-4e88-8854-6bcc113c8154" />
