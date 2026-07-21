@@ -23,7 +23,7 @@ public class ScheduleService {
     @Transactional
     public CreateScheduleResponse create(Long userId, CreateScheduleRequest request) {
         User user = userRepository.findById(userId).orElseThrow(
-                () -> new UserNotFoundException("없는 유저입니다.")
+                () -> new UserNotFoundException("사용자가 없습니다.")
         );
 
         Schedule schedule = new Schedule(request.getTitle(), request.getContent(), user);
@@ -35,10 +35,10 @@ public class ScheduleService {
     @Transactional(readOnly = true)
     public List<GetScheduleResponse> getAll(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(
-                () -> new UserNotFoundException("없는 유저입니다.")
+                () -> new UserNotFoundException("사용자가 없습니다.")
         );
 
-        List<Schedule> schedules = scheduleRepository.findAll(userId);
+        List<Schedule> schedules = scheduleRepository.findAllByUserId(userId);
         if (schedules.isEmpty()) {
             throw new ScheduleNotFoundException("일정이 없습니다.");
         }
@@ -49,7 +49,7 @@ public class ScheduleService {
     @Transactional(readOnly = true)
     public GetScheduleResponse getOne(Long userId, Long scheduleId) {
         userRepository.findById(userId).orElseThrow(
-            () -> new UserNotFoundException("없는 유저입니다.")
+            () -> new UserNotFoundException("사용자가 없습니다.")
         );
 
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
@@ -63,12 +63,12 @@ public class ScheduleService {
     }
 
     @Transactional
-    public UpdateScheduleResponse update(Long scheduleId, UpdateScheduleReqeust request) {
+    public UpdateScheduleResponse update(Long scheduleId, UpdateScheduleRequest request) {
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
                 () -> new ScheduleNotFoundException("일정이 없습니다.")
         );
 
-        schedule.update(request.getTitle(), request.getContetn());
+        schedule.update(request.getTitle(), request.getContent());
         return new UpdateScheduleResponse(schedule);
     }
 
