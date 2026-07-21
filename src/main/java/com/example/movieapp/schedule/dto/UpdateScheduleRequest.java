@@ -1,10 +1,12 @@
 package com.example.movieapp.schedule.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class UpdateScheduleReqeust {
+@NoArgsConstructor
+public class UpdateScheduleRequest {
 
     private String title;
-    private String contetn;
+    private String content;
 }
