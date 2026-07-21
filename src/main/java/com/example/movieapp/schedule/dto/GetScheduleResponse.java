@@ -1,11 +1,13 @@
 package com.example.movieapp.schedule.dto;
 
 import com.example.movieapp.schedule.entity.Schedule;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Getter
+@JsonPropertyOrder
 public class GetScheduleResponse {
 
     private final Long id;
