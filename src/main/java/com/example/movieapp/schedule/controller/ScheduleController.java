@@ -3,6 +3,7 @@ package com.example.movieapp.schedule.controller;
 import com.example.movieapp.schedule.dto.*;
 import com.example.movieapp.schedule.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,18 @@ public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
+    @GetMapping("/schedules")
+    public ResponseEntity<Page<GetScheduleResponse>> findAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+
+        Page<GetScheduleResponse> scheduleResponses = scheduleService.findAll(page, size);
+        return ResponseEntity.ok(scheduleResponses);
+    }
+
     @PostMapping("/users/{userId}/schedules")
+
     public ResponseEntity<CreateScheduleResponse> create(@PathVariable Long userId, @RequestBody CreateScheduleRequest request) {
         return ResponseEntity.ok(scheduleService.create(userId, request));
     }
